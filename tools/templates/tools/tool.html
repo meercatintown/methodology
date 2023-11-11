@@ -1,0 +1,28 @@
+{% extends 'base/base.html' %}
+
+{% block title %}{{tool.title}} | {% endblock %}
+
+{% block content %}
+<div id="step-app">
+    <nav class="breadcrumb" aria-label="breadcrumbs">
+        <ul>
+            <li><a href="#">Dashboard</a></li>
+            <li><a href="{% url 'tools' %}">Tools</a></li>
+            <li class="is-active"><a href="#" aria-current="page">{{ tool.title }}</a></li>
+        </ul>
+    </nav>
+
+    <div class="columns">
+        <div class="column">
+            <h1 class="title">{{tool.title}}</h1>
+            <h2 class="title">{{tool.description}}</h2>
+
+            
+            <div class="buttons">
+                <a href="{% url 'edit_tool' tool.id %}" class="button is-warning">Edit Tool</a>
+                <a href="{% url 'delete_tool' tool.id %}" class="button is-danger">Delete Tool</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

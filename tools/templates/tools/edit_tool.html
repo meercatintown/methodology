@@ -1,0 +1,116 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Edit Tool | {% endblock %}
+
+{% block content %}
+<nav class="breadcrumb" aria-label="breadcrumbs">
+    <ul>
+        <li><a href="#">Dashboard</a></li>
+        <li><a href="{% url 'tools' %}">Tools</a></li>
+        <li class="is-active"><a href="{% url 'tool' tool.id %}" aria-label="page">{{tool.title}}</a></li>
+    </ul>
+</nav>
+
+<div class="columns" id="tool-app">
+    <div class="column is-4">
+        <h1 class="title">Edit Tool</h1>
+    </div>
+
+<div class="columns" id="tool-app">
+    <form action="." method="post" @submit="validateForm">
+        {% csrf_token %}
+
+        <div class="field">
+            <label>Title</label>
+
+            <div class="control">
+                <input type="text" name="title" id="id_title" v-model="title">
+            </div>
+        </div>
+
+        <div class="field">
+            <label>Topic</label>
+
+            <div class="control">
+                <input type="text" name="topic" id="id_topic" v-model="title">
+            </div>
+        </div>
+
+        <div class="field">
+            <label>Related Step</label>
+            <div class="control">
+                <div class="select">
+                    <select name="related_step">
+                        <option value="0">{{tool.step}}</option>
+                        {% for step in steps %}
+                        <option value="{{forloop.counter}}">{{forloop.counter}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="field">
+            <label>Description</label>
+
+            <div class="control">
+                <input type="text" name="description" id="id_description" v-model="description">
+            </div>
+        </div>
+
+        <div class="field">
+            <div class="control">
+                <button class="button is-success">Save Changes</button>
+            </div>
+        </div>
+    </form>
+</div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+    const ToolApp = {
+        data() {
+            return {
+                title: '{{tool.title}}',
+                topic: '{{tool.topic}}',
+                related_step: '{{tool.related_step}}',
+                description: '{{tool.description}}',
+                errors: []
+            }
+        },
+        delimiters: ['[[',']]'],
+        methods: {
+            validateForm(e) {
+                this.errors = []
+
+                if(this.title) {
+                    return true 
+                }
+                if(this.topic) {
+                    return true
+                }
+                if(this.related_step) {
+                    return true
+                }
+                if(this.description) {
+                    return true
+                }
+
+                e.preventDefault()
+
+                this.errors.push('The title is missing')
+
+                return false
+            }
+        }
+    }
+
+    Vue.createApp(ToolApp).mount('#tool-app')
+</script>
+
+{% endblock %}

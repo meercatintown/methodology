@@ -1,0 +1,27 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+<nav class="breadcrumb" aria-label="breadcrumbs">
+    <ul>
+        <li><a href="#">Dashboard</a></li>
+        <li><a href="{% url 'vulns' %}">Vulnerabilities</a></li>
+    </ul>
+</nav>
+
+<div class="layout__body">
+    <form class="form" action="" method="POST">
+        {% csrf_token %}
+        <div class="form__group">
+            <p>Are you sure you want to delete "{{vuln}}"?</p>
+        </div>
+
+        <div class="for__group">
+            <div class="buttons">
+                <button class="button is-danger" type="submit" value="Confirm">Confirm</button>
+            </div>
+        </div>
+    </form>
+</div>
+</div>
+
+{% endblock %}
